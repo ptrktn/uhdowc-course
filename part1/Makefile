@@ -71,6 +71,11 @@ part1.6:
 	@echo Check out https://github.com/docker-hy/docs-exercise/blob/master/index.js
 	docker run -it devopsdockeruh/pull_exercise
 
+.PHONY: part1.7
+part1.7:
+	cd part1.7 && docker build . -t web-server
+	docker run web-server
+
 part1.1.txt:
 	$(MAKE) stop-containers
 	$(MAKE) part1.1 > $@
