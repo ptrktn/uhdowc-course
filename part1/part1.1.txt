@@ -1,0 +1,14 @@
+make[1]: Entering directory '/home/rice/uhdowc-course/part1'
+for i in `seq 3` ; do docker container run -d nginx ; done
+6f9a6ae3175703f5ee516e0da7c1fe1857e2b1174a2239b96acbc523d569199a
+cba261e9edcbc597ed2d2f988ed7d00f053e3f449d6439ac79a4c84c45510965
+31327da7bfe8c6576053a798ab542c9d9c85dbbc6af3e74a0f5ba5b86b5aabce
+docker container stop `docker container ls -q | head -n 2`
+31327da7bfe8
+cba261e9edcb
+docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                              PORTS               NAMES
+31327da7bfe8        nginx               "/docker-entrypoint.…"   1 second ago        Exited (0) Less than a second ago                       jolly_sinoussi
+cba261e9edcb        nginx               "/docker-entrypoint.…"   1 second ago        Exited (0) Less than a second ago                       fervent_nobel
+6f9a6ae31757        nginx               "/docker-entrypoint.…"   2 seconds ago       Up 1 second                         80/tcp              vigorous_chatelet
+make[1]: Leaving directory '/home/rice/uhdowc-course/part1'

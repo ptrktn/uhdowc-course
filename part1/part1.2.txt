@@ -1,0 +1,38 @@
+make[1]: Entering directory '/home/rice/uhdowc-course/part1'
+docker ps -as
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                              PORTS               NAMES               SIZE
+31327da7bfe8        nginx               "/docker-entrypoint.…"   1 second ago        Exited (0) Less than a second ago                       jolly_sinoussi      1.09kB (virtual 133MB)
+cba261e9edcb        nginx               "/docker-entrypoint.…"   1 second ago        Exited (0) Less than a second ago                       fervent_nobel       1.09kB (virtual 133MB)
+6f9a6ae31757        nginx               "/docker-entrypoint.…"   2 seconds ago       Up 1 second                         80/tcp              vigorous_chatelet   1.09kB (virtual 133MB)
+docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+nginx               latest              08b152afcfae        8 days ago          133MB
+make stop-containers prune-containers clean-images
+make[2]: Entering directory '/home/rice/uhdowc-course/part1'
+XID=`docker container ls -q` ; \
+if [ ! -z "$XID" ] ; then docker container stop $XID || exit 1 ; fi
+6f9a6ae31757
+docker container prune --force
+Deleted Containers:
+31327da7bfe8c6576053a798ab542c9d9c85dbbc6af3e74a0f5ba5b86b5aabce
+cba261e9edcbc597ed2d2f988ed7d00f053e3f449d6439ac79a4c84c45510965
+6f9a6ae3175703f5ee516e0da7c1fe1857e2b1174a2239b96acbc523d569199a
+
+Total reclaimed space: 3.279kB
+XID=`docker image ls -q` ; \
+if [ ! -z "$XID" ] ; then docker image rm $XID || exit 1 ; fi
+Untagged: nginx:latest
+Untagged: nginx@sha256:8f335768880da6baf72b70c701002b45f4932acae8d574dedfddaf967fc3ac90
+Deleted: sha256:08b152afcfae220e9709f00767054b824361c742ea03a9fe936271ba520a0a4b
+Deleted: sha256:97386f823dd75e356afac10af0def601f2cd86908e3f163fb59780a057198e1b
+Deleted: sha256:316cd969204ae854302bc55c610698829c9f23fa6fcd4e0f69afa6f29fedfd68
+Deleted: sha256:dcec23d16cb7cdbd725dc0024f38b39fd326066fc59784df92b40fc05ba3728f
+Deleted: sha256:1e294000374b3a304c2bfcfe51460aa599237149ed42e3423ac2c3f155f9b4a5
+Deleted: sha256:c0d318592b21711dc370e180acd66ad5d42f173d5b58ed315d08b9b09babb84a
+Deleted: sha256:814bff7343242acfd20a2c841e041dd57c50f0cf844d4abd2329f78b992197f4
+make[2]: Leaving directory '/home/rice/uhdowc-course/part1'
+docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+make[1]: Leaving directory '/home/rice/uhdowc-course/part1'
