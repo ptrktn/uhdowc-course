@@ -1,0 +1,40 @@
+cd part1.8 && docker build . -t curler
+Sending build context to Docker daemon   5.12kB
+Step 1/6 : FROM ubuntu:18.04
+18.04: Pulling from library/ubuntu
+feac53061382: Pull complete 
+Digest: sha256:7bd7a9ca99f868bf69c4b6212f64f2af8e243f97ba13abb3e641e03a7ceb59e8
+Status: Downloaded newer image for ubuntu:18.04
+ ---> 39a8cfeef173
+Step 2/6 : WORKDIR /usr/src/app
+ ---> Running in 6c1349dd54fd
+Removing intermediate container 6c1349dd54fd
+ ---> 6ee9f08628f0
+Step 3/6 : RUN apt-get update -qq
+ ---> Running in ea3258c79b1b
+Removing intermediate container ea3258c79b1b
+ ---> 379a8517e786
+Step 4/6 : RUN (apt-get -y install curl) > /dev/null 2>&1
+ ---> Running in db64aacdf114
+Removing intermediate container db64aacdf114
+ ---> ca25dfa89472
+Step 5/6 : COPY curler.sh .
+ ---> 1fee91fb997a
+Step 6/6 : CMD ./curler.sh
+ ---> Running in 61e0afa126f2
+Removing intermediate container 61e0afa126f2
+ ---> 27998b326772
+Successfully built 27998b326772
+Successfully tagged curler:latest
+docker run -it curler
+Input website:
+helsinki.fi
+Searching..
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>301 Moved Permanently</title>
+</head><body>
+<h1>Moved Permanently</h1>
+<p>The document has moved <a href="https://www.helsinki.fi/">here</a>.</p>
+</body></html>
+

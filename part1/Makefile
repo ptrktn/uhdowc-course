@@ -76,6 +76,11 @@ part1.7:
 	cd part1.7 && docker build . -t web-server
 	docker run web-server
 
+.PHONY: part1.8
+part1.8:
+	cd part1.8 && docker build . -t curler
+	docker run -it curler
+
 part1.1.txt:
 	$(MAKE) stop-containers
 	$(MAKE) part1.1 > $@
