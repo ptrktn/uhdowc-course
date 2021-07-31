@@ -81,6 +81,17 @@ part1.8:
 	cd part1.8 && docker build . -t curler
 	docker run -it curler
 
+.PHONY: part1.9
+part1.9:
+	touch text.log
+	docker run -v "$(PWD)/text.log:/usr/src/app/text.log" devopsdockeruh/simple-web-service:alpine
+
+.PHONY: part1.10
+part1.10:
+	cd part1.7 && docker build . -t web-server
+	docker run -d -p 8080:8080 web-server
+	curl http://localhost:8080
+
 part1.1.txt:
 	$(MAKE) stop-containers
 	$(MAKE) part1.1 > $@
