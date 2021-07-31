@@ -92,6 +92,15 @@ part1.10:
 	docker run -d -p 8080:8080 web-server
 	curl http://localhost:8080
 
+part1.11/material-applications/spring-example-project:
+	cd part1.11 && git clone git@github.com:docker-hy/material-applications.git
+
+.PHONY: part1.11
+part1.11: part1.11/material-applications/spring-example-project
+	install part1.11/Dockerfile part1.11/material-applications/spring-example-project
+	cd part1.11/material-applications/spring-example-project && docker build . -t java-spring
+	docker run -d -p 8080:8080 java-spring
+
 part1.1.txt:
 	$(MAKE) stop-containers
 	$(MAKE) part1.1 > $@
@@ -102,5 +111,6 @@ part1.2.txt:
 .PHONY: clean
 clean:
 	$(MAKE) stop-containers prune-containers clean-images
+	rm -fr part1.11/material-applications
 	test -z "`docker image ls -q`"
 	test -z "`docker container ls -q`"
