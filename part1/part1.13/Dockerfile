@@ -1,8 +1,10 @@
 FROM ubuntu:latest
 
-EXPOSE 8080
+# Schematics in 1.14 suggest the container should listen on port 8000
+EXPOSE 8000
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PATH=$PATH:/usr/local/go/bin
+ENV PORT 8000
 
 WORKDIR /usr/src/app
 COPY . .

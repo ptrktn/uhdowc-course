@@ -93,15 +93,19 @@ part1.11: material-applications
 part1.12: material-applications
 	install part1.12/Dockerfile material-applications/example-frontend
 	cd material-applications/example-frontend && docker build . -t example-frontend
-	docker run -p 5000:5000 example-frontend
+	docker run -d -p 5000:5000 example-frontend
 
 .PHONY: part1.13
 part1.13: material-applications
 	install part1.13/Dockerfile material-applications/example-backend
 	cd material-applications/example-backend && docker build . -t example-backend
-	docker run -d -p 8080:8080 example-backend
+	docker run -d -p 8080:8000 example-backend
 	sleep 10
 	curl http://localhost:8080/ping
+
+.PHONY: part1.14
+part1.14:
+	$(MAKE) -n part1.12 part1.13
 
 part1.1.txt:
 	$(MAKE) stop-containers

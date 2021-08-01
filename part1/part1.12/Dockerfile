@@ -3,6 +3,8 @@ FROM ubuntu:latest
 EXPOSE 5000
 
 ENV DEBIAN_FRONTEND=noninteractive
+# 1.14
+ENV REACT_APP_BACKEND_URL=http://localhost:8080
 WORKDIR /usr/src/app
 COPY . .
 
