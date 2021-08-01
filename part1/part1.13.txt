@@ -1,0 +1,84 @@
+install part1.13/Dockerfile material-applications/example-backend
+cd material-applications/example-backend && docker build . -t example-backend
+Sending build context to Docker daemon   42.5kB
+Step 1/11 : FROM ubuntu:latest
+latest: Pulling from library/ubuntu
+16ec32c2132b: Pulling fs layer
+16ec32c2132b: Verifying Checksum
+16ec32c2132b: Download complete
+16ec32c2132b: Pull complete
+Digest: sha256:82becede498899ec668628e7cb0ad87b6e1c371cb8a1e597d83a47fac21d6af3
+Status: Downloaded newer image for ubuntu:latest
+ ---> 1318b700e415
+Step 2/11 : EXPOSE 8080
+ ---> Running in 73e600d66f25
+Removing intermediate container 73e600d66f25
+ ---> a753a6044af0
+Step 3/11 : ENV DEBIAN_FRONTEND=noninteractive
+ ---> Running in 75df13e88a65
+Removing intermediate container 75df13e88a65
+ ---> 025ae2e9ce85
+Step 4/11 : ENV PATH=$PATH:/usr/local/go/bin
+ ---> Running in 5cd818f0ee5b
+Removing intermediate container 5cd818f0ee5b
+ ---> 8085cb7d1350
+Step 5/11 : WORKDIR /usr/src/app
+ ---> Running in 6512567955df
+Removing intermediate container 6512567955df
+ ---> 117edaefd69d
+Step 6/11 : COPY . .
+ ---> 242677ff1d34
+Step 7/11 : RUN apt-get update -qq
+ ---> Running in 7325076f4bae
+Removing intermediate container 7325076f4bae
+ ---> 45bb4fc75b9f
+Step 8/11 : RUN (apt-get -y install curl) > /dev/null 2>&1
+ ---> Running in 79787ed092f2
+Removing intermediate container 79787ed092f2
+ ---> e038b6ad33a8
+Step 9/11 : RUN curl -sL https://dl.google.com/go/go1.16.6.linux-amd64.tar.gz | gzip -dc | ( cd /usr/local && tar xf - )
+ ---> Running in 09f3b3223d8e
+Removing intermediate container 09f3b3223d8e
+ ---> 188932a14049
+Step 10/11 : RUN go build
+ ---> Running in 65bf7b8d7e50
+[91mgo: downloading github.com/gin-contrib/cors v1.3.1
+[0m[91mgo: downloading github.com/gin-gonic/gin v1.6.3
+[0m[91mgo: downloading github.com/gin-contrib/sse v0.1.0
+[0m[91mgo: downloading github.com/mattn/go-isatty v0.0.12
+[0m[91mgo: downloading github.com/go-redis/redis/v8 v8.4.2
+[0m[91mgo: downloading github.com/go-pg/pg/v10 v10.7.3
+[0m[91mgo: downloading github.com/go-playground/validator/v10 v10.2.0
+[0m[91mgo: downloading github.com/golang/protobuf v1.4.3
+[0m[91mgo: downloading github.com/ugorji/go v1.1.7
+[0m[91mgo: downloading github.com/ugorji/go/codec v1.1.7
+[0m[91mgo: downloading gopkg.in/yaml.v2 v2.3.0
+[0m[91mgo: downloading golang.org/x/sys v0.0.0-20201119102817-f84b799fce68
+[0m[91mgo: downloading github.com/cespare/xxhash/v2 v2.1.1
+[0m[91mgo: downloading github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f
+[0m[91mgo: downloading go.opentelemetry.io/otel v0.14.0
+[0m[91mgo: downloading mellium.im/sasl v0.2.1
+[0m[91mgo: downloading github.com/go-pg/zerochecker v0.2.0
+[0m[91mgo: downloading github.com/jinzhu/inflection v1.0.0
+[0m[91mgo: downloading github.com/vmihailenco/msgpack/v5 v5.0.0
+[0m[91mgo: downloading github.com/vmihailenco/tagparser v0.1.2
+[0m[91mgo: downloading github.com/go-playground/universal-translator v0.17.0
+[0m[91mgo: downloading github.com/leodido/go-urn v1.2.0
+[0m[91mgo: downloading google.golang.org/protobuf v1.25.0
+[0m[91mgo: downloading github.com/tmthrgd/go-hex v0.0.0-20190904060850-447a3041c3bc
+[0m[91mgo: downloading github.com/vmihailenco/bufpool v0.1.11
+[0m[91mgo: downloading golang.org/x/crypto v0.0.0-20201117144127-c1f2f97bffc9
+[0m[91mgo: downloading github.com/go-playground/locales v0.13.0
+[0mRemoving intermediate container 65bf7b8d7e50
+ ---> 9d058cd7cc3b
+Step 11/11 : CMD ["./server"]
+ ---> Running in 89e7e2c48785
+Removing intermediate container 89e7e2c48785
+ ---> 786d098c32cc
+Successfully built 786d098c32cc
+Successfully tagged example-backend:latest
+docker run -d -p 8080:8080 example-backend
+d3c1a71214577a3c7edbfe92191565f64273b71bb1baec11abda87cfb1ded93c
+sleep 10
+curl http://localhost:8080/ping
+pong
