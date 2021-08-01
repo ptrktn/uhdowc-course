@@ -8,17 +8,8 @@ usage:
 .PHONY: all
 all: part1.1.txt part1.2.txt
 
-.PHONY: allx
-allx:
-	docker container run hello-world
-	docker container run hello-world
-	docker image ls
-	docker container ls
-	docker container ls -a
-	docker container rm `docker container ls -a | sed 1d | awk '{print $$1}'`
-	docker container ls -a
-	docker image rm hello-world 
-	docker image ls
+material-applications:
+	git clone git@github.com:docker-hy/material-applications.git
 
 .PHONY: stop-containers
 stop-containers:
@@ -92,14 +83,17 @@ part1.10:
 	docker run -d -p 8080:8080 web-server
 	curl http://localhost:8080
 
-part1.11/material-applications/spring-example-project:
-	cd part1.11 && git clone git@github.com:docker-hy/material-applications.git
-
 .PHONY: part1.11
-part1.11: part1.11/material-applications/spring-example-project
-	install part1.11/Dockerfile part1.11/material-applications/spring-example-project
-	cd part1.11/material-applications/spring-example-project && docker build . -t java-spring
+part1.11: material-applications
+	install part1.11/Dockerfile material-applications/spring-example-project
+	cd material-applications/spring-example-project && docker build . -t java-spring
 	docker run -d -p 8080:8080 java-spring
+
+.PHONY: part1.12
+part1.12: material-applications
+	install part1.12/Dockerfile material-applications/example-frontend
+	cd material-applications/example-frontend && docker build . -t example-frontend
+	docker run -p 5000:5000 example-frontend
 
 part1.1.txt:
 	$(MAKE) stop-containers
@@ -111,6 +105,6 @@ part1.2.txt:
 .PHONY: clean
 clean:
 	$(MAKE) stop-containers prune-containers clean-images
-	rm -fr part1.11/material-applications
+	rm -fr material-applications
 	test -z "`docker image ls -q`"
 	test -z "`docker container ls -q`"
