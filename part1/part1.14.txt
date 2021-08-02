@@ -1,0 +1,4 @@
+test "200" = "`curl -s -o /dev/null -I -w '%{http_code}' http://localhost:5000`" && echo SUCCESS
+SUCCESS
+test "pong" = "`curl -s http://localhost:8080/ping`" && echo SUCCESS
+SUCCESS

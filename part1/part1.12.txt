@@ -1,40 +1,156 @@
+git clone git@github.com:docker-hy/material-applications.git
+Cloning into 'material-applications'...
 install part1.12/Dockerfile material-applications/example-frontend
 cd material-applications/example-frontend && docker build . -t example-frontend
-Sending build context to Docker daemon  729.1kB
-Step 1/11 : FROM ubuntu:latest
+Sending build context to Docker daemon  729.1kB
+Step 1/12 : FROM ubuntu:latest
+latest: Pulling from library/ubuntu
+16ec32c2132b: Pulling fs layer
+16ec32c2132b: Verifying Checksum
+16ec32c2132b: Download complete
+16ec32c2132b: Pull complete
+Digest: sha256:82becede498899ec668628e7cb0ad87b6e1c371cb8a1e597d83a47fac21d6af3
+Status: Downloaded newer image for ubuntu:latest
  ---> 1318b700e415
-Step 2/11 : EXPOSE 5000
- ---> Using cache
- ---> 574fbac6be41
-Step 3/11 : ENV DEBIAN_FRONTEND=noninteractive
- ---> Using cache
- ---> 0b17f6d1578f
-Step 4/11 : WORKDIR /usr/src/app
- ---> Using cache
- ---> 858c7138c7e5
-Step 5/11 : COPY . .
- ---> Using cache
- ---> 05b98166ea90
-Step 6/11 : RUN apt-get update -qq
- ---> Using cache
- ---> 10edc0ad3be9
-Step 7/11 : RUN (apt-get -y install nodejs npm) > /dev/null 2>&1
- ---> Using cache
- ---> 0bfc0c3d838a
-Step 8/11 : RUN npm install
- ---> Using cache
- ---> 565431b8b7ff
-Step 9/11 : RUN npm run build
- ---> Using cache
- ---> 39f3f48607d8
-Step 10/11 : RUN npm install -g serve
- ---> Using cache
- ---> a0ef5351f1d1
-Step 11/11 : CMD ["serve", "-s", "-l", "5000", "build"]
- ---> Using cache
- ---> 565c4bb0ab91
-Successfully built 565c4bb0ab91
-Successfully tagged example-frontend:latest
-docker run -p 5000:5000 example-frontend
-INFO: Accepting connections at http://localhost:5000
+Step 2/12 : EXPOSE 5000
+ ---> Running in 3d7a6a4c6c60
+Removing intermediate container 3d7a6a4c6c60
+ ---> 49650ee506f5
+Step 3/12 : ENV DEBIAN_FRONTEND=noninteractive
+ ---> Running in 36050b8f7a1b
+Removing intermediate container 36050b8f7a1b
+ ---> af1ab00813f7
+Step 4/12 : ENV REACT_APP_BACKEND_URL=http://localhost:8080
+ ---> Running in 65438c02fa1f
+Removing intermediate container 65438c02fa1f
+ ---> ba3a4de5de32
+Step 5/12 : WORKDIR /usr/src/app
+ ---> Running in 4a49f346abec
+Removing intermediate container 4a49f346abec
+ ---> 0f2d18f212d6
+Step 6/12 : COPY . .
+ ---> 6e2ec241a19c
+Step 7/12 : RUN apt-get update -qq
+ ---> Running in c3591e7bf018
+Removing intermediate container c3591e7bf018
+ ---> 1028893c4b1c
+Step 8/12 : RUN (apt-get -y install nodejs npm) > /dev/null 2>&1
+ ---> Running in f33c8734220c
+Removing intermediate container f33c8734220c
+ ---> 6a8d94d002e4
+Step 9/12 : RUN npm install
+ ---> Running in b36ecc61adef
 
+> core-js@2.6.12 postinstall /usr/src/app/node_modules/babel-runtime/node_modules/core-js
+> node -e "try{require('./postinstall')}catch(e){}"
+
+[96mThank you for using core-js ([94m https://github.com/zloirock/core-js [96m) for polyfilling JavaScript standard library![0m
+
+[96mThe project needs your help! Please consider supporting of core-js on Open Collective or Patreon: [0m
+[96m>[94m https://opencollective.com/core-js [0m
+[96m>[94m https://www.patreon.com/zloirock [0m
+
+[96mAlso, the author of core-js ([94m https://github.com/zloirock [96m) is looking for a good job -)[0m
+
+
+> core-js@3.8.1 postinstall /usr/src/app/node_modules/core-js
+> node -e "try{require('./postinstall')}catch(e){}"
+
+[96mThank you for using core-js ([94m https://github.com/zloirock/core-js [96m) for polyfilling JavaScript standard library![0m
+
+[96mThe project needs your help! Please consider supporting of core-js on Open Collective or Patreon: [0m
+[96m>[94m https://opencollective.com/core-js [0m
+[96m>[94m https://www.patreon.com/zloirock [0m
+
+[96mAlso, the author of core-js ([94m https://github.com/zloirock [96m) is looking for a good job -)[0m
+
+
+> core-js-pure@3.8.1 postinstall /usr/src/app/node_modules/core-js-pure
+> node -e "try{require('./postinstall')}catch(e){}"
+
+[96mThank you for using core-js ([94m https://github.com/zloirock/core-js [96m) for polyfilling JavaScript standard library![0m
+
+[96mThe project needs your help! Please consider supporting of core-js on Open Collective or Patreon: [0m
+[96m>[94m https://opencollective.com/core-js [0m
+[96m>[94m https://www.patreon.com/zloirock [0m
+
+[96mAlso, the author of core-js ([94m https://github.com/zloirock [96m) is looking for a good job -)[0m
+
+
+> ejs@2.7.4 postinstall /usr/src/app/node_modules/ejs
+> node ./postinstall.js
+
+Thank you for installing [35mEJS[0m: built with the [32mJake[0m JavaScript build tool ([32mhttps://jakejs.com/[0m)
+
+[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91moptional[0m[91m SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.13 (node_modules/webpack-dev-server/node_modules/fsevents):
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mnotsup[0m[91m SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.13: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91moptional[0m[91m SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.13 (node_modules/watchpack-chokidar2/node_modules/fsevents):
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mnotsup[0m[91m SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.13: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91moptional[0m[91m SKIPPING OPTIONAL DEPENDENCY: fsevents@2.2.1 (node_modules/fsevents):
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mnotsup[0m[91m SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@2.2.1: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91moptional[0m[91m SKIPPING OPTIONAL DEPENDENCY: fsevents@2.1.3 (node_modules/chokidar/node_modules/fsevents):
+[0m[91mnpm[0m[91m [0m[91mWARN[0m[91m [0m[91mnotsup[0m[91m SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@2.1.3: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+[0m[91m
+[0madded 1940 packages from 766 contributors and audited 1947 packages in 42.064s
+
+125 packages are looking for funding
+  run `npm fund` for details
+
+found 5924 vulnerabilities (209 moderate, 5715 high)
+  run `npm audit fix` to fix them, or `npm audit` for details
+Removing intermediate container b36ecc61adef
+ ---> 3ae7c82dabbc
+Step 10/12 : RUN npm run build
+ ---> Running in d9d7019cbfb6
+
+> example-frontend@0.1.0 build /usr/src/app
+> react-scripts build
+
+Creating an optimized production build...
+[91mBrowserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+
+Why you should do it regularly:
+https://github.com/browserslist/browserslist#browsers-data-updating
+[0mCompiled successfully.
+
+File sizes after gzip:
+
+  77.24 KB  build/static/js/2.43ca3586.chunk.js
+  1.81 KB   build/static/js/main.667b6e84.chunk.js
+  781 B     build/static/js/runtime-main.223e45fb.js
+  235 B     build/static/css/main.eaa5d75e.chunk.css
+
+The project was built assuming it is hosted at /.
+You can control this with the homepage field in your package.json.
+
+The build folder is ready to be deployed.
+You may serve it with a static server:
+
+  npm install -g serve
+  serve -s build
+
+Find out more about deployment here:
+
+  https://cra.link/deployment
+
+Removing intermediate container d9d7019cbfb6
+ ---> d25641439bf7
+Step 11/12 : RUN npm install -g serve
+ ---> Running in 6006b8552813
+/usr/local/bin/serve -> /usr/local/lib/node_modules/serve/bin/serve.js
++ serve@12.0.0
+added 88 packages from 42 contributors in 3.789s
+Removing intermediate container 6006b8552813
+ ---> 041fcbfd75b2
+Step 12/12 : CMD ["serve", "-s", "-l", "5000", "build"]
+ ---> Running in 043b07b516f8
+Removing intermediate container 043b07b516f8
+ ---> ac471531eea0
+Successfully built ac471531eea0
+Successfully tagged example-frontend:latest
+docker run -d -p 5000:5000 example-frontend
+02264bb2d221b9ffb75f66c4c9b889b51ec90e8ea7e7e493a2b478dc8c3c0190
+sleep 10
+test "200" = "`curl -s -o /dev/null -I -w '%{http_code}' http://localhost:5000`" && echo SUCCESS
+SUCCESS
