@@ -17,6 +17,9 @@ Lotka-Volterra model.
 
 `docker run -it --rm bz-erhelper-wrapper https://raw.githubusercontent.com/ptrktn/bz/main/erhelper/examples/brusselator.txt`
 
+## Links
+
+[https://hub.docker.com/r/uhdowccourse/bz-erhelper-wrapper](https://hub.docker.com/r/uhdowccourse/bz-erhelper-wrapper)
 
 
 
