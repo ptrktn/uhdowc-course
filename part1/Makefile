@@ -110,10 +110,18 @@ part1.14:
 	test "200" = "`curl -s -o /dev/null -I -w '%{http_code}' http://localhost:5000`" && echo SUCCESS
 	test "pong" = "`curl -s http://localhost:8080/ping`" && echo SUCCESS
 
+# docker tag bz-erhelper-wrapper uhdowccourse/bz-erhelper-wrapper
 .PHONY: part1.15
 part1.15:
 	cd part1.15 && docker build . -t bz-erhelper-wrapper
 	docker run -it --rm bz-erhelper-wrapper https://raw.githubusercontent.com/ptrktn/bz/main/erhelper/examples/brusselator.txt
+
+.PHONY: part1.16
+part1.16:
+	docker pull devopsdockeruh/heroku-example
+	docker tag devopsdockeruh/heroku-example registry.heroku.com/uhdowc-course/web
+	docker push heroku container:release web
+	heroku container:release web 
 
 part1.1.txt:
 	$(MAKE) stop-containers

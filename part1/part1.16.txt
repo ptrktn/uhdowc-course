@@ -1,0 +1,3 @@
+SKIPPED
+
+NB: The instructions for this exercise should be improved.
