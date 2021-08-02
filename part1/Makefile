@@ -110,6 +110,11 @@ part1.14:
 	test "200" = "`curl -s -o /dev/null -I -w '%{http_code}' http://localhost:5000`" && echo SUCCESS
 	test "pong" = "`curl -s http://localhost:8080/ping`" && echo SUCCESS
 
+.PHONY: part1.15
+part1.15:
+	cd part1.15 && docker build . -t bz-erhelper-wrapper
+	docker run -it --rm bz-erhelper-wrapper https://raw.githubusercontent.com/ptrktn/bz/main/erhelper/examples/brusselator.txt
+
 part1.1.txt:
 	$(MAKE) stop-containers
 	$(MAKE) part1.1 > $@

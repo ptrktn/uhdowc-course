@@ -1,0 +1,116 @@
+cd part1.15 && docker build . -t bz-erhelper-wrapper
+Sending build context to Docker daemon  4.096kB
+Step 1/8 : FROM ubuntu:latest
+ ---> 1318b700e415
+Step 2/8 : ENV DEBIAN_FRONTEND=noninteractive
+ ---> Running in 08c644d553bc
+Removing intermediate container 08c644d553bc
+ ---> 0b57595a9cd1
+Step 3/8 : WORKDIR /usr/src/app
+ ---> Running in ae02c81b29da
+Removing intermediate container ae02c81b29da
+ ---> b2e986c5f8ea
+Step 4/8 : COPY . .
+ ---> 7f7a69becb66
+Step 5/8 : RUN apt-get update -qq
+ ---> Running in 910fe0befff3
+Removing intermediate container 910fe0befff3
+ ---> 4b46bd6e314e
+Step 6/8 : RUN (apt-get -y install curl python2) > /dev/null 2>&1
+ ---> Running in f912cbea1cb0
+Removing intermediate container f912cbea1cb0
+ ---> 46cc1fae2abd
+Step 7/8 : RUN curl -s -L -O https://raw.githubusercontent.com/ptrktn/bz/main/erhelper/erhelper.py
+ ---> Running in 033ccd245b5c
+Removing intermediate container 033ccd245b5c
+ ---> 67cdbf7e2454
+Step 8/8 : ENTRYPOINT ["./erhelper.sh"]
+ ---> Running in a9c0692856dc
+Removing intermediate container a9c0692856dc
+ ---> 560a045ac61d
+Successfully built 560a045ac61d
+Successfully tagged bz-erhelper-wrapper:latest
+docker run -it --rm bz-erhelper-wrapper https://raw.githubusercontent.com/ptrktn/bz/main/erhelper/examples/brusselator.txt
+/* Fetching https://raw.githubusercontent.com/ptrktn/bz/main/erhelper/examples/brusselator.txt */
+#ifndef __ERHELPER_H__
+#define __ERHELPER_H__
+
+/*
+  A ==> X                    (R1)
+  X + X + Y ==> X + X + X    (R2)
+  B + X ==> Y + D            (R3)
+  X ==> E                    (R4)
+
+  x(1) X
+  x(2) Y
+
+  Plot command:
+
+ xplot.sh -t 'X Y' FILE
+*/
+
+#define x(i) (x[i-1])
+#define x0(i) (x[i])
+#define xdot(i) (xdot[i-1])
+#define kf(i) kf[i]
+#define kr(i) kr[i]
+
+/* Species in excess A B D E */
+#define A (1)
+#define B (3)
+#define D (0)
+#define E (0)
+
+#define NEQ 2
+#define N_REACTIONS 4
+#define T_END 50
+#define T_DELTA (1/ (double) 10)
+#define LSODE_ATOL 1E-6
+#define LSODE_RTOL 1E-6
+#define LSODE_HMAX 0.01
+
+static double kf[N_REACTIONS+1], kr[N_REACTIONS+1];
+
+static void erhelper_init(double *x, double *abstol, double *reltol)
+{
+	abstol[0] = LSODE_ATOL;
+	reltol[0] = LSODE_RTOL;
+	x0(0) = 0;
+	abstol[1] = LSODE_ATOL;
+	reltol[1] = LSODE_RTOL;
+	x0(1) = 0;
+	abstol[2] = LSODE_ATOL;
+	reltol[2] = LSODE_RTOL;
+	x0(2) = 0;
+
+	/* initial conditions */
+	/* X */
+	x0(1) = 1 ;
+	/* Y */
+	x0(2) = 1 ;
+
+	/* forward reaction rates */
+	kf(1) = 1 ;
+	kf(2) = 1 ;
+	kf(3) = 1 ;
+	kf(4) = 1 ;
+
+	/* reverse reaction rates */
+
+}
+
+static void fex(double t, double *x, double *xdot, void *data)
+{
+	double fkinet1 = kf(1) * A ;
+	double fkinet2 = kf(2) * x(1) * x(1) * x(2) ;
+	double fkinet3 = kf(3) * B * x(1) ;
+	double fkinet4 = kf(4) * x(1) ;
+
+	/* X */
+	xdot(1) = + fkinet1 - 2 * fkinet2 + 3 * fkinet2 - fkinet3 - fkinet4 ; 
+	/* Y */
+	xdot(2) = - fkinet2 + fkinet3 ; 
+
+}
+
+#endif
