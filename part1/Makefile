@@ -120,8 +120,9 @@ part1.15:
 part1.16:
 	docker pull devopsdockeruh/heroku-example
 	docker tag devopsdockeruh/heroku-example registry.heroku.com/uhdowc-course/web
-	docker push heroku container:release web
-	heroku container:release web 
+	docker push registry.heroku.com/uhdowc-course/web
+	heroku container:release web -a uhdowc-course
+	@echo NB: the application URL is https://uhdowc-course.herokuapp.com
 
 part1.1.txt:
 	$(MAKE) stop-containers

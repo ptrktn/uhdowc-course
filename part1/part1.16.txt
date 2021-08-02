@@ -1,3 +1,6 @@
-SKIPPED
+docker pull devopsdockeruh/heroku-example
+docker tag devopsdockeruh/heroku-example registry.heroku.com/uhdowc-course/web
+docker push registry.heroku.com/uhdowc-course/web
+heroku container:release web -a uhdowc-course
 
-NB: The instructions for this exercise should be improved.
+NB: the application URL is https://uhdowc-course.herokuapp.com
