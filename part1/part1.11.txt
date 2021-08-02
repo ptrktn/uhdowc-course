@@ -23,3 +23,5 @@ Successfully tagged java-spring:latest
 docker run -d -p 8080:8080 java-spring
 f0d5ff261ce65031071ff703daba85427ce88b0769f92aa0927927ec16e6a0ba
 
+NB: Screenshot file is `part1.11/part1.11.png'
+
