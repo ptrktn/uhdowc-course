@@ -130,6 +130,10 @@ part1.1.txt:
 part1.2.txt:
 	$(MAKE) part1.2 > $@
 
+.PHONY: test
+test:
+	for i in `seq 1 16` ; do f=part1.$${i}.txt ; test -f $$f || exit 1 ; echo $$f ; done
+
 .PHONY: clean
 clean:
 	$(MAKE) stop-containers prune-containers clean-images
