@@ -2,3 +2,12 @@ test "200" = "`curl -s -o /dev/null -I -w '%{http_code}' http://localhost:5000`"
 SUCCESS
 test "pong" = "`curl -s http://localhost:8080/ping`" && echo SUCCESS
 SUCCESS
+
+NB: Dockerfiles are `part1.1{2,3}/Dockerfile'
+
+NB: Commands to start containers are as follows
+
+    docker run -d -p 5000:5000 example-frontend
+    docker run -d -p 8080:8000 example-backend
+
+NB: Screenshot of browser is `part1.14/part1.14.png'
