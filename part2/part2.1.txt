@@ -1,0 +1,30 @@
+install /dev/null part2.1/text.log
+cd part2.1 && docker-compose up
+Pulling simple-web-service-alpine (devopsdockeruh/simple-web-service:alpine)...
+alpine: Pulling from devopsdockeruh/simple-web-service
+ba3557a56b15: Pull complete
+1dace236434b: Pull complete
+4f4fb700ef54: Pull complete
+Digest: sha256:dd4d367476f86b7d7579d3379fe446ae5dfce25480903fb0966fc2e5257e0543
+Status: Downloaded newer image for devopsdockeruh/simple-web-service:alpine
+Creating part2.1 ... done
+Attaching to part2.1
+part2.1                      | Starting log output
+part2.1                      | Wrote text to /usr/src/app/text.log
+part2.1                      | Wrote text to /usr/src/app/text.log
+part2.1                      | Wrote text to /usr/src/app/text.log
+part2.1                      | Wrote text to /usr/src/app/text.log
+part2.1                      | Wrote text to /usr/src/app/text.log
+part2.1                      | Wrote text to /usr/src/app/text.log
+part2.1                      | Wrote text to /usr/src/app/text.log
+^CGracefully stopping... (press Ctrl+C again to force)
+Stopping part2.1 ... done
+tail part2.1/text.log 
+2021-08-03 00:48:07 +0000 UTC
+2021-08-03 00:48:09 +0000 UTC
+2021-08-03 00:48:11 +0000 UTC
+2021-08-03 00:48:13 +0000 UTC
+2021-08-03 00:48:15 +0000 UTC
+Secret message is: 'You can find the source code here: https://github.com/docker-hy'
+2021-08-03 00:48:17 +0000 UTC
+
