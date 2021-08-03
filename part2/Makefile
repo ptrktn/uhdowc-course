@@ -46,6 +46,19 @@ part2.3:
 	sleep 10
 	$(MAKE) -C ../part1 part1.14
 
+.PHONY: part2.4
+part2.4:
+	for i in front back ; do \
+          docker image ls example-$${i}end || exit 1 ; \
+          test -z "`docker ps | grep example-$${i}end`" || exit 1 ; \
+        done
+	cd part2.3 && docker-compose down
+	docker pull redis
+	cd part2.4 && docker-compose up -d
+	sleep 10
+	$(MAKE) -C ../part1 part1.14
+	test "pong" = "`curl -s 'http://localhost:8080/ping?redis=true'`" && echo SUCCESS
+
 .PHONY: test
 test:
 	for i in `seq 1 16` ; do f=part2.$${i}.txt ; test -f $$f || exit 1 ; echo $$f ; done

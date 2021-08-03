@@ -1,0 +1,33 @@
+for i in front back ; do \
+          docker image ls example-${i}end || exit 1 ; \
+          test -z "`docker ps | grep example-${i}end`" || exit 1 ; \
+        done
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+example-frontend    latest              b005cf6885ee        6 hours ago         861MB
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+example-backend     latest              6dd7e6b1f88d        5 hours ago         651MB
+cd part2.3 && docker-compose down
+Removing network part23_default
+WARNING: Network part23_default not found.
+docker pull redis
+Using default tag: latest
+latest: Pulling from library/redis
+Digest: sha256:cd0c68c5479f2db4b9e2c5fbfdb7a8acb77625322dd5b474578515422d3ddb59
+Status: Image is up to date for redis:latest
+docker.io/library/redis:latest
+cd part2.4 && docker-compose up -d
+Creating network "part24_default" with the default driver
+Creating part24_frontend_1    ... done
+Creating part24_redis-cache_1 ... done
+Creating part24_backend_1     ... done
+sleep 10
+make -C ../part1 part1.14
+make[1]: Entering directory '/home/rice/uhdowc-course/part1'
+test "200" = "`curl -s -o /dev/null -I -w '%{http_code}' http://localhost:5000`" && echo SUCCESS
+SUCCESS
+test "pong" = "`curl -s http://localhost:8080/ping`" && echo SUCCESS
+SUCCESS
+make[1]: Leaving directory '/home/rice/uhdowc-course/part1'
+test "pong" = "`curl -s 'http://localhost:8080/ping?redis=true'`" && echo SUCCESS
+SUCCESS
+
