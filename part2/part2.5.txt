@@ -1,0 +1,17 @@
+make -C ../part1 material-applications
+make[1]: Entering directory '/home/rice/uhdowc-course/part1'
+make[1]: 'material-applications' is up to date.
+make[1]: Leaving directory '/home/rice/uhdowc-course/part1'
+cd ../part1/material-applications/scaling-exercise && docker-compose down
+Removing load-balancer              ... done
+Removing scaling-exercise_compute_1 ... done
+Removing calculator                 ... done
+Removing scaling-exercise_compute_2 ... done
+Removing network scaling-exercise_default
+cd ../part1/material-applications/scaling-exercise && docker-compose up -d --scale compute=2
+Creating network "scaling-exercise_default" with the default driver
+Creating load-balancer              ... done
+Creating calculator                 ... done
+Creating scaling-exercise_compute_1 ... done
+Creating scaling-exercise_compute_2 ... done
+

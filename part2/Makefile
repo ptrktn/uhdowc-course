@@ -59,6 +59,12 @@ part2.4:
 	$(MAKE) -C ../part1 part1.14
 	test "pong" = "`curl -s 'http://localhost:8080/ping?redis=true'`" && echo SUCCESS
 
+.PHONY: part2.5
+part2.5:
+	$(MAKE) -C ../part1 material-applications
+	cd ../part1/material-applications/scaling-exercise && docker-compose down
+	cd ../part1/material-applications/scaling-exercise && docker-compose up -d --scale compute=2
+
 .PHONY: test
 test:
 	for i in `seq 1 16` ; do f=part2.$${i}.txt ; test -f $$f || exit 1 ; echo $$f ; done
