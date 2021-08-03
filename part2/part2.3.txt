@@ -1,0 +1,20 @@
+for i in front back ; do \
+          docker image ls example-${i}end || exit 1 ; \
+          test -z "`docker ps | grep example-${i}end`" || exit 1 ; \
+        done
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+example-frontend    latest              b005cf6885ee        5 hours ago         861MB
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+example-backend     latest              6dd7e6b1f88d        5 hours ago         651MB
+cd part2.3 && docker-compose up -d
+Starting part23_frontend_1 ... done
+Starting part23_backend_1  ... done
+sleep 10
+make -C ../part1 part1.14
+make[1]: Entering directory '/home/rice/uhdowc-course/part1'
+test "200" = "`curl -s -o /dev/null -I -w '%{http_code}' http://localhost:5000`" && echo SUCCESS
+SUCCESS
+test "pong" = "`curl -s http://localhost:8080/ping`" && echo SUCCESS
+SUCCESS
+make[1]: Leaving directory '/home/rice/uhdowc-course/part1'
+

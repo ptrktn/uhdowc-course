@@ -36,6 +36,16 @@ part2.2:
 	sleep 10
 	curl -s http://localhost:8888
 
+.PHONY: part2.3
+part2.3:
+	for i in front back ; do \
+          docker image ls example-$${i}end || exit 1 ; \
+          test -z "`docker ps | grep example-$${i}end`" || exit 1 ; \
+        done
+	cd part2.3 && docker-compose up -d
+	sleep 10
+	$(MAKE) -C ../part1 part1.14
+
 .PHONY: test
 test:
 	for i in `seq 1 16` ; do f=part2.$${i}.txt ; test -f $$f || exit 1 ; echo $$f ; done
