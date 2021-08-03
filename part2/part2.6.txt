@@ -1,0 +1,18 @@
+cd part2.6 && docker-compose up -d
+Creating network "part26_default" with the default driver
+Creating volume "part26_database" with default driver
+Creating db_redmine           ... done
+Creating part26_frontend_1    ... done
+Creating part26_backend_1     ... done
+Creating part26_redis-cache_1 ... done
+sleep 10
+make -C ../part1 part1.14
+make[1]: Entering directory '/home/rice/uhdowc-course/part1'
+test "200" = "`curl -s -o /dev/null -I -w '%{http_code}' http://localhost:5000`" && echo SUCCESS
+SUCCESS
+test "pong" = "`curl -s http://localhost:8080/ping`" && echo SUCCESS
+SUCCESS
+make[1]: Leaving directory '/home/rice/uhdowc-course/part1'
+test "pong" = "`curl -s 'http://localhost:8080/ping?redis=true'`" && echo SUCCESS
+SUCCESS
+

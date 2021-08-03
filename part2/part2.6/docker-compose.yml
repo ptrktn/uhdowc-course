@@ -1,0 +1,33 @@
+version: '3.5'
+
+services:
+
+  db:
+    image: postgres:13.2-alpine
+    restart: unless-stopped
+    environment:
+      - POSTGRES_PASSWORD=example
+    container_name: db_redmine
+    volumes:
+      - database:/var/lib/postgresql/data
+
+  redis-cache:
+      image: redis
+
+  backend:
+      image: example-backend
+      environment:
+      - REQUEST_ORIGIN=http://localhost:5000
+      - REDIS_HOST=redis-cache
+      - POSTGRES_HOST=db
+      - POSTGRES_PASSWORD=example
+      ports:
+      - 8080:8000
+
+  frontend:
+      image: example-frontend
+      ports:
+      - 5000:5000
+
+volumes:
+  database:
