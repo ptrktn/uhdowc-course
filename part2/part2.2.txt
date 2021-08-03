@@ -1,0 +1,6 @@
+cd part2.2 && docker-compose up -d
+Starting part22_simple-web-service-alpine_1 ... done
+sleep 10
+curl -s http://localhost:8888
+{"message":"You connected to the following path: /","path":"/"}
+

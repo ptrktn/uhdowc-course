@@ -1,0 +1,10 @@
+version: '3.5'
+
+services:
+  simple-web-service-alpine:
+    image: devopsdockeruh/simple-web-service:alpine
+    command: ["server"]
+    environment:
+      - PORT=8888
+    ports: 
+      - 8888:8888 

@@ -30,6 +30,12 @@ part2.1:
 	install /dev/null part2.1/text.log
 	cd part2.1 && docker-compose up
 
+.PHONY: part2.2
+part2.2:
+	cd part2.2 && docker-compose up -d
+	sleep 10
+	curl -s http://localhost:8888
+
 .PHONY: test
 test:
 	for i in `seq 1 16` ; do f=part2.$${i}.txt ; test -f $$f || exit 1 ; echo $$f ; done
