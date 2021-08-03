@@ -1,0 +1,11 @@
+version: '3.5'
+
+services:
+  simple-web-service-alpine:
+    image: devopsdockeruh/simple-web-service:alpine
+    volumes:
+      - "./text.log:/usr/src/app/text.log"
+    container_name: part2.1
+
+
+
