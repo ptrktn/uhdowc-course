@@ -77,6 +77,15 @@ part2.6:
 	$(MAKE) -C ../part1 part1.14
 	test "pong" = "`curl -s 'http://localhost:8080/ping?redis=true'`" && echo SUCCESS
 
+.PHONY: part2.8
+part2.8:
+	cd part2.6 && docker-compose down
+	cd part2.8 && docker-compose down
+	if [ ! -z "`docker volume ls -q | grep part26_database`" ] ; then docker volume rm part26_database ; fi
+	cd part2.8 && docker-compose up -d
+	sleep 10
+	test "pong" = "`curl -s 'http://localhost/api/ping'`" && echo SUCCESS
+
 .PHONY: test
 test:
 	for i in `seq 1 16` ; do f=part2.$${i}.txt ; test -f $$f || exit 1 ; echo $$f ; done

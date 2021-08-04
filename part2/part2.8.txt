@@ -1,0 +1,11 @@
+cd part2.8 && docker-compose up -d
+Creating network "part28_default" with the default driver
+Creating part28_reverseproxy_1 ... done
+Creating part28_redis-cache_1  ... done
+Creating db_redmine            ... done
+Creating part28_backend_1      ... done
+Creating part28_frontend_1     ... done
+sleep 10
+test "pong" = "`curl -s 'http://localhost/api/ping'`" && echo SUCCESS
+SUCCESS
+
