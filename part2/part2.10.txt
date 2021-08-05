@@ -1,0 +1,65 @@
+The required change is not to define REACT_APP_BACKEND_URL in frontend.
+
+diff -u ../part1/part1.12/Dockerfile part2.10/Dockerfile || /bin/true
+--- ../part1/part1.12/Dockerfile	2021-08-01 09:46:37.516259354 +0000
++++ part2.10/Dockerfile	2021-08-05 08:36:17.804600140 +0000
+@@ -4,7 +4,6 @@
+ 
+ ENV DEBIAN_FRONTEND=noninteractive
+ # 1.14
+-ENV REACT_APP_BACKEND_URL=http://localhost:8080
+ WORKDIR /usr/src/app
+ COPY . .
+
+Reuse the ngxing.conf from the part2.8, no changes.
+ 
+diff -u part2.8/docker-compose.yml part2.10/docker-compose.yml || /bin/true
+--- part2.8/docker-compose.yml	2021-08-04 00:53:25.500402490 +0000
++++ part2.10/docker-compose.yml	2021-08-05 08:33:03.954662759 +0000
+@@ -28,7 +28,7 @@
+   reverseproxy:
+      image: nginx
+      volumes:
+-     - ./nginx.conf:/etc/nginx/nginx.conf:ro
++     - ../part2.8/nginx.conf:/etc/nginx/nginx.conf:ro
+      ports:
+      - 80:80
+ 
+install part2.10/Dockerfile ../part1/material-applications/example-frontend
+cd ../part1/material-applications/example-frontend && docker build . -t example-frontend
+Sending build context to Docker daemon  729.1kB
+Step 1/11 : FROM ubuntu:latest
+ ---> 1318b700e415
+Step 2/11 : EXPOSE 5000
+ ---> Using cache
+ ---> feb7ee5972dd
+Step 3/11 : ENV DEBIAN_FRONTEND=noninteractive
+ ---> Using cache
+ ---> ba1300c00bbc
+Step 4/11 : WORKDIR /usr/src/app
+ ---> Using cache
+ ---> 642acdc55205
+Step 5/11 : COPY . .
+ ---> Using cache
+ ---> 9e3cc72a9ccc
+Step 6/11 : RUN apt-get update -qq
+ ---> Using cache
+ ---> ad0f36aad0ff
+Step 7/11 : RUN (apt-get -y install nodejs npm) > /dev/null 2>&1
+ ---> Using cache
+ ---> fd225bf5d80b
+Step 8/11 : RUN npm install
+ ---> Using cache
+ ---> 26bfb4fd648d
+Step 9/11 : RUN npm run build
+ ---> Using cache
+ ---> f5a51ddf7ebe
+Step 10/11 : RUN npm install -g serve
+ ---> Using cache
+ ---> e4d608dda460
+Step 11/11 : CMD ["serve", "-s", "-l", "5000", "build"]
+ ---> Using cache
+ ---> 0f16c8f384a5
+Successfully built 0f16c8f384a5
+Successfully tagged example-frontend:latest
+cd part2.10 && docker-compose up -d

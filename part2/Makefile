@@ -100,9 +100,17 @@ part2.9:
 	sleep 10
 	sudo ls -l part2.9/database
 
+.PHONY: part2.10
+part2.10:
+	diff -u ../part1/part1.12/Dockerfile part2.10/Dockerfile || /bin/true
+	diff -u part2.8/docker-compose.yml part2.10/docker-compose.yml || /bin/true
+	install part2.10/Dockerfile ../part1/material-applications/example-frontend
+	cd ../part1/material-applications/example-frontend && docker build . -t example-frontend
+	cd part2.10 && docker-compose up -d
+
 .PHONY: test
 test:
-	for i in `seq 1 16` ; do f=part2.$${i}.txt ; test -f $$f || exit 1 ; echo $$f ; done
+	for i in `seq 1 11` ; do f=part2.$${i}.txt ; test -f $$f || exit 1 ; echo $$f ; done
 
 .PHONY: clean
 clean:
