@@ -23,7 +23,12 @@ prune-containers:
 .PHONY: clean-images
 clean-images:
 	XID=`docker image ls -q` ; \
-	if [ ! -z "$$XID" ] ; then docker image rm $$XID || exit 1 ; fi
+	if [ ! -z "$$XID" ] ; then docker image rm --force $$XID || exit 1 ; fi
+
+.PHONY: clean-volumes
+clean-volumes:
+	XID=`docker volume ls -q` ; \
+	if [ ! -z "$$XID" ] ; then docker volume rm --force $$XID || exit 1 ; fi
 
 .PHONY: part2.1
 part2.1:
@@ -86,13 +91,22 @@ part2.8:
 	sleep 10
 	test "pong" = "`curl -s 'http://localhost/api/ping'`" && echo SUCCESS
 
+# Cleanup and deps for this task:
+# make clean
+# make -C ../../part1 part1.12 part1.13 part1.14
+.PHONY: part2.9
+part2.9:
+	cd part2.9 && docker-compose up -d
+	sleep 10
+	sudo ls -l part2.9/database
+
 .PHONY: test
 test:
 	for i in `seq 1 16` ; do f=part2.$${i}.txt ; test -f $$f || exit 1 ; echo $$f ; done
 
 .PHONY: clean
 clean:
-	$(MAKE) stop-containers prune-containers clean-images
+	$(MAKE) stop-containers prune-containers clean-images clean-volumes
 	rm -fr material-applications
 	test -z "`docker image ls -q`"
 	test -z "`docker container ls -q`"

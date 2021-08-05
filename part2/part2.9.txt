@@ -1,0 +1,34 @@
+cd part2.9 && docker-compose up -d
+Creating network "part29_default" with the default driver
+Creating part29_backend_1     ... done
+Creating db_redmine           ... done
+Creating part29_frontend_1    ... done
+Creating part29_redis-cache_1 ... done
+sleep 10
+sudo ls -l part2.9/database
+total 124
+-rw------- 1 70 70     3 Aug  5 06:39 PG_VERSION
+drwx------ 5 70 70  4096 Aug  5 06:39 base
+drwx------ 2 70 70  4096 Aug  5 06:39 global
+drwx------ 2 70 70  4096 Aug  5 06:39 pg_commit_ts
+drwx------ 2 70 70  4096 Aug  5 06:39 pg_dynshmem
+-rw------- 1 70 70  4782 Aug  5 06:39 pg_hba.conf
+-rw------- 1 70 70  1636 Aug  5 06:39 pg_ident.conf
+drwx------ 4 70 70  4096 Aug  5 06:39 pg_logical
+drwx------ 4 70 70  4096 Aug  5 06:39 pg_multixact
+drwx------ 2 70 70  4096 Aug  5 06:39 pg_notify
+drwx------ 2 70 70  4096 Aug  5 06:39 pg_replslot
+drwx------ 2 70 70  4096 Aug  5 06:39 pg_serial
+drwx------ 2 70 70  4096 Aug  5 06:39 pg_snapshots
+drwx------ 2 70 70  4096 Aug  5 06:39 pg_stat
+drwx------ 2 70 70  4096 Aug  5 06:39 pg_stat_tmp
+drwx------ 2 70 70  4096 Aug  5 06:39 pg_subtrans
+drwx------ 2 70 70  4096 Aug  5 06:39 pg_tblspc
+drwx------ 2 70 70  4096 Aug  5 06:39 pg_twophase
+drwx------ 3 70 70  4096 Aug  5 06:39 pg_wal
+drwx------ 2 70 70  4096 Aug  5 06:39 pg_xact
+-rw------- 1 70 70    88 Aug  5 06:39 postgresql.auto.conf
+-rw------- 1 70 70 27956 Aug  5 06:39 postgresql.conf
+-rw------- 1 70 70    24 Aug  5 06:39 postmaster.opts
+-rw------- 1 70 70    94 Aug  5 06:39 postmaster.pid
+
