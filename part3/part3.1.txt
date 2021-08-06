@@ -1,0 +1,7 @@
+The deployment pipeline is implemented by connecting Heroku
+application with the GitHub repository and by enabling automatic
+deployment. Additionally, GitHub actions update the image in DockerHub.
+
+NB: GitHub repository is https://github.com/ptrktn/roomtemp
+NB: Heroku application is https://uhdowc-roomtemp.herokuapp.com
+NB: DockerHub image is https://hub.docker.com/repository/docker/uhdowccourse/roomtemp
