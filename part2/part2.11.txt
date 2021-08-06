@@ -1,0 +1,18 @@
+In this part, containerized Jupyter Notebook service is created. Image
+`jupyter/scipy-notebook' is utilized since it contains the main common
+Python data science libraries. Login process is streamlined by
+providing a custom `jupyter_notebook_config.py' file with predefined
+password `sauna'. Local directory `./work' is mounted into container
+to provide easy access to files on the container host machine.
+
+install -m 755 -d part2.11/work
+cd part2.11 && docker-compose up -d 2>&1
+Creating network "part211_default" with the default driver
+Creating boffinlab ... 
+[1A[2KCreating boffinlab ... [32mdone[0m[1Bsleep 10
+docker logs boffinlab 2>&1 | tail -n 5
+[I 2021-08-06 02:38:24.289 LabApp] JupyterLab application directory is /opt/conda/share/jupyter/lab
+[I 02:38:24.293 NotebookApp] Serving notebooks from local directory: /home/jovyan
+[I 02:38:24.294 NotebookApp] Jupyter Notebook 6.4.0 is running at:
+[I 02:38:24.294 NotebookApp] http://boffinlab:8888/
+[I 02:38:24.294 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).

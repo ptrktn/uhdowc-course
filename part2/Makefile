@@ -108,6 +108,13 @@ part2.10:
 	cd ../part1/material-applications/example-frontend && docker build . -t example-frontend
 	cd part2.10 && docker-compose up -d
 
+.PHONY: part2.11
+part2.11:
+	install -m 755 -d part2.11/work
+	cd part2.11 && docker-compose up -d 2>&1
+	sleep 10
+	docker logs boffinlab 2>&1 | tail -n 5
+
 .PHONY: test
 test:
 	for i in `seq 1 11` ; do f=part2.$${i}.txt ; test -f $$f || exit 1 ; echo $$f ; done

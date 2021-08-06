@@ -1,0 +1,14 @@
+version: '3.5'
+
+services:
+
+  boffinlab:
+    image: jupyter/scipy-notebook
+    restart: unless-stopped
+    container_name: boffinlab
+    hostname: boffinlab
+    volumes:
+    - ./jupyter_notebook_config.py:/home/jovyan/.jupyter/jupyter_notebook_config.py
+    - ./work:/home/jovyan/work
+    ports:
+    - 8888:8888
