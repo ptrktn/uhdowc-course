@@ -1,0 +1,97 @@
+for i in ml-kurkkumopo-backend ml-kurkkumopo-frontend ml-kurkkumopo-training ; do (cd $i && docker build . -t $i ) || exit 1 ; done
+Sending build context to Docker daemon   76.8kB
+Step 1/6 : FROM python:3.6.7-slim
+ ---> ea57895cf3f9
+Step 2/6 : WORKDIR /src
+ ---> Using cache
+ ---> e252aff53594
+Step 3/6 : COPY . .
+ ---> Using cache
+ ---> d81444ee09b5
+Step 4/6 : RUN pip install --upgrade pip
+ ---> Using cache
+ ---> b2e6627409a4
+Step 5/6 : RUN pip install --trusted-host pypi.python.org -r requirements.txt
+ ---> Using cache
+ ---> 0984ae010d4e
+Step 6/6 : CMD ["python", "-u", "app.py"]
+ ---> Using cache
+ ---> b2e53d8e39e9
+Successfully built b2e53d8e39e9
+Successfully tagged ml-kurkkumopo-backend:latest
+Sending build context to Docker daemon   2.02MB
+Step 1/8 : FROM node:12.16.2
+ ---> e764fa94bbf7
+Step 2/8 : WORKDIR /usr/src/app
+ ---> Using cache
+ ---> 10aadbc59663
+Step 3/8 : COPY . .
+ ---> Using cache
+ ---> 77d638b4d68a
+Step 4/8 : RUN npm ci
+ ---> Using cache
+ ---> 3d94260e419e
+Step 5/8 : RUN npm run build
+ ---> Using cache
+ ---> 3550ac2433d2
+Step 6/8 : RUN npm install -g serve
+ ---> Using cache
+ ---> d0ccdfaf737a
+Step 7/8 : EXPOSE 3000
+ ---> Using cache
+ ---> fb95e6e866da
+Step 8/8 : CMD ["serve", "-s", "-l", "3000", "build"]
+ ---> Using cache
+ ---> be3778d21ac2
+Successfully built be3778d21ac2
+Successfully tagged ml-kurkkumopo-frontend:latest
+Sending build context to Docker daemon  292.4kB
+Step 1/6 : FROM python:3.6.7-slim
+ ---> ea57895cf3f9
+Step 2/6 : WORKDIR /src
+ ---> Using cache
+ ---> e252aff53594
+Step 3/6 : COPY . .
+ ---> Using cache
+ ---> 16022ec35289
+Step 4/6 : RUN pip install --upgrade pip
+ ---> Using cache
+ ---> cdfcfef3c240
+Step 5/6 : RUN pip install --trusted-host pypi.python.org -r requirements.txt
+ ---> Using cache
+ ---> 817fd23ded23
+Step 6/6 : CMD ["python", "-u", "train.py"]
+ ---> Using cache
+ ---> 67e109d423dd
+Successfully built 67e109d423dd
+Successfully tagged ml-kurkkumopo-training:latest
+install -m 755 -d part2.7/src/model
+install -m 755 -d part2.7/src/imgs
+cd part2.7 && docker-compose up
+Starting part27_frontend_1  ... done
+Starting part27_training_1  ... done
+Recreating part27_backend_1 ... done
+Attaching to part27_training_1, part27_backend_1, part27_frontend_1
+frontend_1  | INFO: Accepting connections at http://localhost:3000
+backend_1   | Using TensorFlow backend.
+backend_1   | Backend starting
+training_1  | Using TensorFlow backend.
+backend_1   | 2021-08-06 05:16:24.797062: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2
+training_1  | 2021-08-06 05:16:25.403618: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2
+backend_1   |  * Serving Flask app "app" (lazy loading)
+backend_1   |  * Environment: production
+backend_1   |    WARNING: Do not use the development server in a production environment.
+backend_1   |    Use a production WSGI server instead.
+backend_1   |  * Debug mode: on
+backend_1   |  * Running on all addresses.
+backend_1   |    WARNING: This is a development server. Do not use it in a production deployment.
+backend_1   |  * Running on http://172.24.0.4:5000/ (Press CTRL+C to quit)
+backend_1   |  * Restarting with stat
+training_1  | Model already exists at './model/kurkkumopotin.sav'
+part27_training_1 exited with code 0
+backend_1   | 2021-08-06 05:16:28.518778: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2
+backend_1   | Using TensorFlow backend.
+backend_1   |  * Debugger is active!
+backend_1   |  * Debugger PIN: 454-156-722
+backend_1   | 172.24.0.1 - - [06/Aug/2021 05:16:47] "POST /kurkkuvaimopo HTTP/1.1" 200 -
+

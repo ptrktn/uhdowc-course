@@ -82,6 +82,16 @@ part2.6:
 	$(MAKE) -C ../part1 part1.14
 	test "pong" = "`curl -s 'http://localhost:8080/ping?redis=true'`" && echo SUCCESS
 
+ml-kurkkumopo-backend  ml-kurkkumopo-frontend  ml-kurkkumopo-training:
+	git clone git@github.com:docker-hy/$@.git
+
+.PHONY: part2.7
+part2.7: ml-kurkkumopo-backend  ml-kurkkumopo-frontend  ml-kurkkumopo-training
+	for i in ml-kurkkumopo-backend ml-kurkkumopo-frontend ml-kurkkumopo-training ; do (cd $$i && docker build . -t $$i ) || exit 1 ; done
+	install -m 755 -d part2.7/src/model
+	install -m 755 -d part2.7/src/imgs
+	cd part2.7 && docker-compose up
+
 .PHONY: part2.8
 part2.8:
 	cd part2.6 && docker-compose down
