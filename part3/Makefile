@@ -53,6 +53,15 @@ part3.3: material-applications
 	docker exec -it example-frontend pgrep -u appuser -a
 	cd part3.3 && docker-compose down
 
+.PHONY: part3.4
+part3.4: material-applications
+	install part3.4/Dockerfile.frontend material-applications/example-frontend/Dockerfile
+	install part3.4/Dockerfile.backend material-applications/example-backend/Dockerfile
+	cd material-applications/example-frontend && docker build . -t example-frontend
+	cd material-applications/example-backend && docker build . -t example-backend
+	docker image ls | grep -w -E '(example-backend|example-frontend)' | awk '{ print $$1, $$(NF) }'
+	cd part3.4 && docker-compose up
+
 .PHONY: test
 test:
 	for i in `seq 1 8` ; do f=part3.$${i}.txt ; test -f $$f || exit 1 ; echo $$f ; done

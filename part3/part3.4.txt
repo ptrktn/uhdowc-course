@@ -1,0 +1,15 @@
+NB: example-frontend build fails with ubuntu:18.04, an effective
+    workaround is to use ubuntu:latest image.
+
+Before:
+
+docker image ls | grep -w -E '(example-backend|example-frontend)' | awk '{ print $1, $(NF) }'
+example-backend 651MB
+example-frontend 878MB
+
+After:
+
+docker image ls | grep -w -E '(example-backend|example-frontend)' | awk '{ print $1, $(NF) }'
+example-backend 612MB
+example-frontend 691MB
+

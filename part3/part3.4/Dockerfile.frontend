@@ -1,0 +1,23 @@
+FROM ubuntu:latest
+
+EXPOSE 5000
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV REACT_APP_BACKEND_URL=http://localhost:8080
+
+WORKDIR /usr/src/app
+COPY . .
+
+RUN useradd -m appuser && \
+   apt-get update -qq && \
+   (apt-get -y install nodejs npm) > /dev/null 2>&1 && \
+   npm install && \
+   npm run build && \
+   npm install -g serve && \
+   apt-get purge -y --auto-remove build-essential && \
+   apt-get autoremove && \
+   rm -rf /var/lib/apt/lists/*
+
+USER appuser
+
+CMD ["serve", "-s", "-l", "5000", "build"]
