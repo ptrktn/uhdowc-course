@@ -27,6 +27,9 @@ clean-volumes:
 	XID=`docker volume ls -q` ; \
 	if [ ! -z "$$XID" ] ; then docker volume rm --force $$XID || exit 1 ; fi
 
+material-applications:
+	git clone git@github.com:docker-hy/material-applications.git
+
 .PHONY: part3.1
 part3.1:
 	@echo NB: GitHub repository is https://github.com/ptrktn/roomtemp
@@ -38,6 +41,17 @@ part3.2:
 	cd part3.2 && docker build . -t github2dockerhub
 	docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock github2dockerhub https://github.com/ptrktn/roomtemp.git uhdowccourse
 
+.PHONY: part3.3
+part3.3: material-applications
+	install part3.3/Dockerfile.frontend material-applications/example-frontend/Dockerfile
+	install part3.3/Dockerfile.backend material-applications/example-backend/Dockerfile
+	cd material-applications/example-frontend && docker build . -t example-frontend
+	cd material-applications/example-backend && docker build . -t example-backend
+	cd part3.3 && docker-compose up -d
+	sleep 10
+	docker exec -it example-backend pgrep -u appuser -a
+	docker exec -it example-frontend pgrep -u appuser -a
+
 .PHONY: test
 test:
 	for i in `seq 1 8` ; do f=part3.$${i}.txt ; test -f $$f || exit 1 ; echo $$f ; done
@@ -47,3 +61,4 @@ clean:
 	$(MAKE) stop-containers prune-containers clean-images clean-volumes
 	test -z "`docker image ls -q`"
 	test -z "`docker container ls -q`"
+	test -z "`docker image ls -q`"

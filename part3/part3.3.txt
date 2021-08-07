@@ -1,0 +1,9 @@
+cd part3.3 && docker-compose up -d
+Starting example-backend  ... done
+Starting example-frontend ... done
+sleep 10
+docker exec -it example-backend pgrep -u appuser -a
+1 ./server
+docker exec -it example-frontend pgrep -u appuser -a
+1 node /usr/local/bin/serve -s -l 5000 build
+
