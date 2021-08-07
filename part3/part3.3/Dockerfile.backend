@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:latest
 
 # Schematics in 1.14 suggest the container should listen on port 8000
 EXPOSE 8000
