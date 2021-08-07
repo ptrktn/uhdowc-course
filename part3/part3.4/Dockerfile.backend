@@ -7,16 +7,15 @@ ENV PATH=$PATH:/usr/local/go/bin
 ENV PORT 8000
 
 WORKDIR /usr/src/app
+COPY . .
 RUN useradd -m appuser && \
     apt-get update -qq && \
    (apt-get -y install curl) > /dev/null 2>&1 && \
    curl -sL https://dl.google.com/go/go1.16.6.linux-amd64.tar.gz | gzip -dc | ( cd /usr/local && tar xf - ) && \
+   go build && \
    apt-get purge -y --auto-remove curl && \
    apt-get autoremove -y && \
    rm -rf /var/lib/apt/lists/*
-
-COPY . .
-RUN go build
 
 USER appuser
 
