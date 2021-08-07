@@ -40,7 +40,7 @@ part3.2:
 
 .PHONY: test
 test:
-	for i in `seq 1 8` ; do f=part2.$${i}.txt ; test -f $$f || exit 1 ; echo $$f ; done
+	for i in `seq 1 8` ; do f=part3.$${i}.txt ; test -f $$f || exit 1 ; echo $$f ; done
 
 .PHONY: clean
 clean:
