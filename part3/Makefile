@@ -51,6 +51,7 @@ part3.3: material-applications
 	sleep 10
 	docker exec -it example-backend pgrep -u appuser -a
 	docker exec -it example-frontend pgrep -u appuser -a
+	cd part3.3 && docker-compose down
 
 .PHONY: test
 test:
