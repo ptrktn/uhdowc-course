@@ -1,0 +1,144 @@
+Before (part1.15):
+
+bz-erhelper-wrapper 149MB
+
+After:
+
+bz-erhelper-wrapper 44.9MB
+
+Changes:
+
+diff -u ../../uhdowc-course/part1/part1.15/Dockerfile part3.7/Dockerfile || /bin/true
+--- ../../uhdowc-course/part1/part1.15/Dockerfile	2021-08-02 02:36:06.204171708 +0000
++++ part3.7/Dockerfile	2021-08-08 05:36:02.176496238 +0000
+@@ -1,15 +1,14 @@
+-FROM ubuntu:latest
+-
+-ENV DEBIAN_FRONTEND=noninteractive
++FROM alpine:latest
+ 
+ WORKDIR /usr/src/app
+ 
+-COPY . .
++COPY erhelper.sh .
+ 
+-RUN apt-get update -qq
+-RUN (apt-get -y install curl python2) > /dev/null 2>&1
+-RUN curl -s -L -O https://raw.githubusercontent.com/ptrktn/bz/main/erhelper/erhelper.py
++RUN adduser --disabled-password appuser && \
++    apk add --no-cache curl python2 && \
++    curl -s -L -O https://raw.githubusercontent.com/ptrktn/bz/main/erhelper/erhelper.py && chown appuser /usr/src/app
+ 
+-ENTRYPOINT ["./erhelper.sh"]
+ 
++USER appuser
+ 
++ENTRYPOINT ["./erhelper.sh"]
+
+Example build and run:
+
+cd part3.7 && docker build . -t bz-erhelper-wrapper
+Sending build context to Docker daemon  4.608kB
+Step 1/6 : FROM alpine:latest
+ ---> 021b3423115f
+Step 2/6 : WORKDIR /usr/src/app
+ ---> Using cache
+ ---> 3abaf6cb93d1
+Step 3/6 : COPY erhelper.sh .
+ ---> Using cache
+ ---> 3f5263140500
+Step 4/6 : RUN adduser --disabled-password appuser &&     apk add --no-cache curl python2 &&     curl -s -L -O https://raw.githubusercontent.com/ptrktn/bz/main/erhelper/erhelper.py && chown appuser /usr/src/app
+ ---> Using cache
+ ---> 82b5f1aba081
+Step 5/6 : USER appuser
+ ---> Using cache
+ ---> aa80f22c2d9e
+Step 6/6 : ENTRYPOINT ["./erhelper.sh"]
+ ---> Using cache
+ ---> 81fad658c61a
+Successfully built 81fad658c61a
+Successfully tagged bz-erhelper-wrapper:latest
+docker run -it --rm bz-erhelper-wrapper https://raw.githubusercontent.com/ptrktn/bz/main/erhelper/examples/brusselator.txt
+/* Fetching https://raw.githubusercontent.com/ptrktn/bz/main/erhelper/examples/brusselator.txt */
+#ifndef __ERHELPER_H__
+#define __ERHELPER_H__
+
+/*
+  A ==> X                    (R1)
+  X + X + Y ==> X + X + X    (R2)
+  B + X ==> Y + D            (R3)
+  X ==> E                    (R4)
+
+  x(1) X
+  x(2) Y
+
+  Plot command:
+
+ xplot.sh -t 'X Y' FILE
+*/
+
+#define x(i) (x[i-1])
+#define x0(i) (x[i])
+#define xdot(i) (xdot[i-1])
+#define kf(i) kf[i]
+#define kr(i) kr[i]
+
+/* Species in excess A B D E */
+#define A (1)
+#define B (3)
+#define D (0)
+#define E (0)
+
+#define NEQ 2
+#define N_REACTIONS 4
+#define T_END 50
+#define T_DELTA (1/ (double) 10)
+#define LSODE_ATOL 1E-6
+#define LSODE_RTOL 1E-6
+#define LSODE_HMAX 0.01
+
+static double kf[N_REACTIONS+1], kr[N_REACTIONS+1];
+
+static void erhelper_init(double *x, double *abstol, double *reltol)
+{
+	abstol[0] = LSODE_ATOL;
+	reltol[0] = LSODE_RTOL;
+	x0(0) = 0;
+	abstol[1] = LSODE_ATOL;
+	reltol[1] = LSODE_RTOL;
+	x0(1) = 0;
+	abstol[2] = LSODE_ATOL;
+	reltol[2] = LSODE_RTOL;
+	x0(2) = 0;
+
+	/* initial conditions */
+	/* X */
+	x0(1) = 1 ;
+	/* Y */
+	x0(2) = 1 ;
+
+	/* forward reaction rates */
+	kf(1) = 1 ;
+	kf(2) = 1 ;
+	kf(3) = 1 ;
+	kf(4) = 1 ;
+
+	/* reverse reaction rates */
+
+}
+
+static void fex(double t, double *x, double *xdot, void *data)
+{
+	double fkinet1 = kf(1) * A ;
+	double fkinet2 = kf(2) * x(1) * x(1) * x(2) ;
+	double fkinet3 = kf(3) * B * x(1) ;
+	double fkinet4 = kf(4) * x(1) ;
+
+	/* X */
+	xdot(1) = + fkinet1 - 2 * fkinet2 + 3 * fkinet2 - fkinet3 - fkinet4 ; 
+	/* Y */
+	xdot(2) = - fkinet2 + fkinet3 ; 
+
+}
+
+#endif

@@ -89,6 +89,12 @@ part3.6: material-applications
 	docker image ls | grep -w -E '(example-backend|example-frontend)' | awk '{ print $$1, $$(NF) }'
 	cd part3.6 && docker-compose up
 
+.PHONY: part3.7
+part3.7:
+	diff -u ../../uhdowc-course/part1/part1.15/Dockerfile part3.7/Dockerfile || /bin/true
+	cd part3.7 && docker build . -t bz-erhelper-wrapper
+	docker run -it --rm bz-erhelper-wrapper https://raw.githubusercontent.com/ptrktn/bz/main/erhelper/examples/brusselator.txt
+
 .PHONY: test
 test:
 	for i in `seq 1 8` ; do f=part3.$${i}.txt ; test -f $$f || exit 1 ; echo $$f ; done
