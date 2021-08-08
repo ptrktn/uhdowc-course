@@ -8,5 +8,5 @@ example-frontend 878MB
 
 After:
 
-example-backend 225MB
+example-backend 97.9MB
 example-frontend 184MB
