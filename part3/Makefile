@@ -62,6 +62,24 @@ part3.4: material-applications
 	docker image ls | grep -w -E '(example-backend|example-frontend)' | awk '{ print $$1, $$(NF) }'
 	cd part3.4 && docker-compose up
 
+.PHONY: part3.5.1
+part3.5.1: material-applications
+	install part3.5/Dockerfile.node material-applications/example-frontend/Dockerfile
+	install part3.5/Dockerfile.golang material-applications/example-backend/Dockerfile
+	cd material-applications/example-frontend && docker build . -t example-frontend
+	cd material-applications/example-backend && docker build . -t example-backend
+	docker image ls | grep -w -E '(example-backend|example-frontend)' | awk '{ print $$1, $$(NF) }'
+	cd part3.5 && docker-compose up
+
+.PHONY: part3.5
+part3.5: material-applications
+	install part3.5/Dockerfile.frontend material-applications/example-frontend/Dockerfile
+	install part3.5/Dockerfile.backend material-applications/example-backend/Dockerfile
+	cd material-applications/example-frontend && docker build . -t example-frontend
+	cd material-applications/example-backend && docker build . -t example-backend
+	docker image ls | grep -w -E '(example-backend|example-frontend)' | awk '{ print $$1, $$(NF) }'
+	cd part3.5 && docker-compose up
+
 .PHONY: test
 test:
 	for i in `seq 1 8` ; do f=part3.$${i}.txt ; test -f $$f || exit 1 ; echo $$f ; done

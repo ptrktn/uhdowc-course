@@ -1,0 +1,21 @@
+FROM alpine:latest
+
+EXPOSE 5000
+
+ENV REACT_APP_BACKEND_URL=http://localhost:8080
+
+WORKDIR /usr/src/app
+COPY . .
+
+RUN adduser --disabled-password appuser && \
+    apk add --no-cache nodejs npm && \
+    npm install && \
+    npm run build && \
+    npm install -g serve && \
+    npm ci && \
+    rm -fr node_modules && \
+    apk del npm
+
+USER appuser
+
+CMD ["serve", "-s", "-l", "5000", "build"]

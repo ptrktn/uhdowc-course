@@ -1,0 +1,17 @@
+FROM alpine:latest
+
+EXPOSE 8000
+ENV PORT 8000
+
+WORKDIR /usr/src/app
+COPY . .
+
+RUN adduser --disabled-password appuser && \
+    apk add --no-cache go && \
+    go build && \
+    apk del go && \
+    rm -fr /root/go /root/.cache
+
+USER appuser
+
+CMD ["./server"]

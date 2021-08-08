@@ -1,0 +1,14 @@
+Starting point (exercise 3.4)
+
+example-backend 97.9MB
+example-frontend 184MB
+
+Using `node' and `goland'
+
+example-backend 1.01GB
+example-frontend 1.2GB
+
+Using `golang:alpine' and `node:alpine'
+
+example-backend 23.7MB
+example-frontend 100MB
