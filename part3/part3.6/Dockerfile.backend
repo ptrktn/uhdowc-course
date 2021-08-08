@@ -1,0 +1,25 @@
+FROM alpine:latest as build-stage
+
+WORKDIR /usr/src/app
+COPY . .
+ENV PORT 8000
+
+RUN apk add --no-cache go && \
+    go build && \
+    apk del go && \
+    rm -fr /root/go /root/.cache
+
+FROM alpine:latest
+
+ENV PORT 8000
+EXPOSE 8000
+
+WORKDIR /usr/src/app
+
+COPY --from=build-stage /usr/src/app/server /usr/src/app/server
+
+RUN adduser --disabled-password appuser
+
+USER appuser
+
+CMD ["./server"]

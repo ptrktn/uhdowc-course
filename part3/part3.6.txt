@@ -1,0 +1,4 @@
+Multi-stage builds:
+
+example-backend 23.7MB
+example-frontend 53MB
