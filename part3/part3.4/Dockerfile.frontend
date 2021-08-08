@@ -14,7 +14,9 @@ RUN useradd -m appuser && \
    npm install && \
    npm run build && \
    npm install -g serve && \
-   apt-get purge -y --auto-remove build-essential && \
+   npm ci && \
+   rm -fr node_modules && \
+   apt-get purge -y --auto-remove build-essential npm && \
    apt-get autoremove && \
    rm -rf /var/lib/apt/lists/*
 
