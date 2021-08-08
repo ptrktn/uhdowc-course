@@ -8,6 +8,9 @@ bz-erhelper-wrapper 44.9MB
 
 Changes:
 
+- Use `alpine:latest' insteadt of 'ubuntu:latest'.
+- Run the process as non-priviledged user.
+
 diff -u ../../uhdowc-course/part1/part1.15/Dockerfile part3.7/Dockerfile || /bin/true
 --- ../../uhdowc-course/part1/part1.15/Dockerfile	2021-08-02 02:36:06.204171708 +0000
 +++ part3.7/Dockerfile	2021-08-08 05:36:02.176496238 +0000
