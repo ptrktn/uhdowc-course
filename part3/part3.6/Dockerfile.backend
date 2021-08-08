@@ -4,12 +4,11 @@ WORKDIR /usr/src/app
 COPY . .
 ENV PORT 8000
 
-RUN apk add --no-cache go && \
-    go build && \
-    apk del go && \
-    rm -fr /root/go /root/.cache
+RUN adduser --disabled-password appuser && \
+    apk add --no-cache go && \
+    CGO_ENABLED=0 go build
 
-FROM alpine:latest
+FROM scratch
 
 ENV PORT 8000
 EXPOSE 8000
@@ -17,8 +16,8 @@ EXPOSE 8000
 WORKDIR /usr/src/app
 
 COPY --from=build-stage /usr/src/app/server /usr/src/app/server
-
-RUN adduser --disabled-password appuser
+COPY --from=build-stage /etc/passwd /etc/passwd
+COPY --from=build-stage /etc/group /etc/group
 
 USER appuser
 
