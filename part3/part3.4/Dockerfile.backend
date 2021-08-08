@@ -15,7 +15,8 @@ RUN useradd -m appuser && \
    go build && \
    apt-get purge -y --auto-remove curl && \
    apt-get autoremove -y && \
-   rm -rf /var/lib/apt/lists/*
+   rm -rf /var/lib/apt/lists/* && \
+   rm -fr /usr/local/go
 
 USER appuser
 
